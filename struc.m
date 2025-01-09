@@ -12,8 +12,7 @@ T.FNodePtrs=[1:(Ny+1)*(Nx+1)]';
 idx = reshape(T.FNodePtrs,Ny+1,Nx+1);
 % T.CNodePtrs = [idx(2:end-1,1)',idx(1,:),idx(Ny+1,:),idx(2:end-1,Nx+1)']';   
 % T.CNodePtrs= [ idx(1:end,1)',idx(Ny+1,2:end-1), idx(1:end,Nx+1)'];
-T.CNodePtrs= [ idx(1:end,1)', idx(1:end,Nx+1)'];
-% T.CNodePtrs=[1,(Ny+1)*(Nx+1)];
+T.CNodePtrs=[1,(Ny+1)*(Nx+1)];
 % T.CNodePtrs=[];
 T.FNodePtrs(T.CNodePtrs)=[];
 
