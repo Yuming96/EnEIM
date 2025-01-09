@@ -1,0 +1,19 @@
+function Fai=KL_expansion(xo,yo,P,co,sigma,c,Nxm,Nym)
+xm=xo(1):1/Nxm:xo(end);
+ym=yo(1):1/Nym:yo(end); 
+[X,Y]=meshgrid(xm,ym);
+mesh=[X(:) Y(:)];
+% P=20;
+cv=@(x1,x2) gp_exp_cov(x1,x2,c,sigma);
+%  [~,KL] = randomfield(cv, mesh, 'nsamples', 12, 'filter', 0.95); 
+[~,KL]=randomfield(cv,mesh,'nsamples',1,'trunc',P,'spthresh',1e-6);
+U=KL.bases; 
+sDS=KL.sv;
+oFai=U*diag(sDS);
+P=length(sDS);
+% Fai=oFai;
+Fai=zeros(size(co,1),P);
+for i=1:P
+    fai=@(s) interp2(xm,ym,reshape(oFai(:,i),Nym+1,Nxm+1),s(:,1),s(:,2));
+    Fai(:,i)=fai(co);
+end
